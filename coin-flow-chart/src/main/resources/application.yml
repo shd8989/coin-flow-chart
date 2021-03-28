@@ -1,0 +1,30 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    encoding:
+      charset: UTF-8
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:agensgraph://localhost:5432/postgres
+    driver-class-name: net.bitnine.agensgraph.Driver
+    username: postgres
+    password: agensgraph
+    hikari:
+      connection-init-sql: set graph_path=crypto
+      connection-test-query: SELECT 1
+      maximum-pool-size: 5
+  thymeleaf:
+    cache: false
+  messages:
+    encoding: UTF-8
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  mapper-locations: mapper/*.xml
+  type-aliases-package: com.crypto.model
+logging:
+  level:
+    root: INFO
