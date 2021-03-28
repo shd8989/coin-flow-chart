@@ -23,10 +23,14 @@ import com.crypto.model.IndexEntity;
 import net.bitnine.agensgraph.deps.org.json.simple.JSONArray;
 
 @Service
-public class PriceService {
+public class IndexService {
 	
 	@Autowired
 	IndexMapper indexMapper;
+	
+	public List<CoinEntity> selectCoinDetailList() {
+		return indexMapper.selectCoinDetailList();
+	}
 	
 	public int updateCoinAllData() {
 		try {
@@ -47,12 +51,10 @@ public class PriceService {
 				Map map = (Map)itr.next();
 				Map newMap = new HashMap();
 				newMap.put("market", map.get("market"));
-				newMap.put("korean_name", map.get("market"));
 				coinReqList.add(newMap);
 				cnt++;
 				if(cnt >= 10) break;
 			}
-			System.out.println(coinReqList.size());
 
 //			코인 상세정보
 //			https://api.upbit.com/v1/ticker?markets=
@@ -95,7 +97,7 @@ public class PriceService {
 					coinDetailReqList.add(newMap);
 				}
 			}
-//			System.out.println(coinDetailReqList);
+			System.out.println(coinDetailReqList);
 			return indexMapper.updateCoinAllData(coinDetailReqList);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

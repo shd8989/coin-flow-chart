@@ -1,0 +1,24 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+$(document).ready(function() {
+	console.log('api')
+	$.ajax({
+        url: "/api/v1/detail",
+        type: "GET",
+        data: $('form').serialize(),
+        success: function(data){
+            console.log('success')
+            console.log(data)
+        },
+        error: function(){
+            alert("simpleWithObject err");
+        }
+    });
+})
+</script>
+</head>
+<body>
+</body>
+</html>

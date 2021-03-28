@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.crypto.model.IndexEntity;
+import com.crypto.model.CoinEntity;
 
 @Mapper
 public interface IndexMapper {
 	
-	List<IndexEntity> selectDataList();
+	List<CoinEntity> selectCoinDetailList();
 	
 	int updateCoinAllData(List<Map> list);
 }
