@@ -10,5 +10,9 @@ import lombok.ToString;
 @ToString
 public class IndexEntity {
 	@JsonProperty
-	private String name;
+	private String market;
+	@JsonProperty
+	private String korean_name;
+	@JsonProperty
+	private String english_name;
 }
