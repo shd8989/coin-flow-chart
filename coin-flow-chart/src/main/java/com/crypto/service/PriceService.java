@@ -28,7 +28,7 @@ public class PriceService {
 	@Autowired
 	IndexMapper indexMapper;
 	
-	public List<CoinEntity> selectDataList() {
+	public int updateCoinAllData() {
 		try {
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
@@ -41,6 +41,7 @@ public class PriceService {
 			List<IndexEntity> coinResponseList = (List) coinResponseEntity.getBody();
 			Iterator itr = coinResponseList.iterator();
 			List<Map> coinReqList = new ArrayList<Map>();
+			int cnt = 0;
 			
 			while(itr.hasNext()) {
 				Map map = (Map)itr.next();
@@ -48,7 +49,10 @@ public class PriceService {
 				newMap.put("market", map.get("market"));
 				newMap.put("korean_name", map.get("market"));
 				coinReqList.add(newMap);
+				cnt++;
+				if(cnt >= 10) break;
 			}
+			System.out.println(coinReqList.size());
 
 //			코인 상세정보
 //			https://api.upbit.com/v1/ticker?markets=
@@ -87,16 +91,15 @@ public class PriceService {
 					newMap.put("highest_52_week_date", map.get("highest_52_week_date"));
 					newMap.put("lowest_52_week_price", map.get("lowest_52_week_price"));
 					newMap.put("lowest_52_week_date", map.get("lowest_52_week_date"));
-					newMap.put("timestamp", map.get("timestamp"));
+//					newMap.put("timestamp", map.get("timestamp"));
 					coinDetailReqList.add(newMap);
 				}
-				System.out.println(coinDetailReqList);
 			}
+//			System.out.println(coinDetailReqList);
 			return indexMapper.updateCoinAllData(coinDetailReqList);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println("qweqweqwe");
-		return new ArrayList<>();
+		return 0;
 	}
 }

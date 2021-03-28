@@ -1,4 +1,5 @@
 package com.crypto.model;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +23,7 @@ public class CoinEntity {
 	@JsonProperty
 	private String trade_time_kst;
 	@JsonProperty
-	private Timestamp trade_timestamp;
+	private BigInteger trade_timestamp;
 	@JsonProperty
 	private Double opening_price;
 	@JsonProperty
@@ -56,7 +57,7 @@ public class CoinEntity {
 	@JsonProperty
 	private Double highest_52_week_price;
 	@JsonProperty
-	private Double highest_52_week_date;
+	private String highest_52_week_date;
 	@JsonProperty
 	private Double lowest_52_week_price;
 	@JsonProperty
