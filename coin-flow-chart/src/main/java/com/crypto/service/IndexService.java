@@ -97,7 +97,7 @@ public class IndexService {
 					coinDetailReqList.add(newMap);
 				}
 			}
-			System.out.println(coinDetailReqList);
+//			System.out.println(coinDetailReqList);
 			return indexMapper.updateCoinAllData(coinDetailReqList);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

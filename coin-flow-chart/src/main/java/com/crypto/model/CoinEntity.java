@@ -15,53 +15,51 @@ public class CoinEntity {
 	@JsonProperty
 	private String market;
 	@JsonProperty
-	private String trade_date;
+	private String tradeData;
 	@JsonProperty
-	private String trade_time;
+	private String tradeTime;
 	@JsonProperty
-	private String trade_date_kst;
+	private String tradeDateKst;
 	@JsonProperty
-	private String trade_time_kst;
+	private String tradeTimeKst;
 	@JsonProperty
-	private BigInteger trade_timestamp;
+	private BigInteger tradeTimestamp;
 	@JsonProperty
-	private Double opening_price;
+	private Double openingPrice;
 	@JsonProperty
-	private Double high_price;
+	private Double highPrice;
 	@JsonProperty
-	private Double low_price;
+	private Double lowPrice;
 	@JsonProperty
-	private Double trade_price;
+	private Double accTradePrice;
 	@JsonProperty
-	private Double prev_closing_price;
+	private Double prevClosingPrice;
 	@JsonProperty
 	private String change;
 	@JsonProperty
-	private Double change_price;
+	private Double changePrice;
 	@JsonProperty
-	private Double change_rate;
+	private Double changeRate;
 	@JsonProperty
-	private Double signed_change_price;
+	private Double signedChangePrice;
 	@JsonProperty
-	private Double signed_change_rate;
+	private Double signedChangeRate;
 	@JsonProperty
-	private Double trade_volume;
+	private Double tradeVolume;
 	@JsonProperty
-	private Double acc_trade_price;
+	private Double accTradePrice24h;
 	@JsonProperty
-	private Double acc_trade_price_24h;
+	private Double accTradeVolume;
 	@JsonProperty
-	private Double acc_trade_volume;
+	private Double accTradeVolume24h;
 	@JsonProperty
-	private Double acc_trade_volume_24h;
+	private Double highest52WeekPrice;
 	@JsonProperty
-	private Double highest_52_week_price;
+	private String highest52WeekDate;
 	@JsonProperty
-	private String highest_52_week_date;
+	private Double lowest52WeekPrice;
 	@JsonProperty
-	private Double lowest_52_week_price;
-	@JsonProperty
-	private String lowest_52_week_date;
+	private String lowest52WeekDate;
 	@JsonProperty
 	private Timestamp timestamp;
 }
