@@ -1,24 +1,16 @@
 <html>
 <head>
+<meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script>
-$(document).ready(function() {
-	console.log('api')
-	$.ajax({
-        url: "/api/v1/detail",
-        type: "GET",
-        data: $('form').serialize(),
-        success: function(data){
-            console.log('success')
-            console.log(data)
-        },
-        error: function(){
-            alert("simpleWithObject err");
-        }
-    });
-})
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.0.2/echarts.min.js" integrity="sha512-t9GZbGKCH5MuYUFsq5AdrhllT0kdnc2fNMizKDgLXBBXgHP2dXxjRPOzYJauAXW9OXLlSYELUqWD30k7cb0Mkg==" crossorigin="anonymous"></script>
+
+<script src="../js/index.js"></script>
 </head>
 <body>
+<div class="contents">
+	<div class="box">
+		<div id="lineChart" style="width:850px;height:500px;"></div>
+	</div>
+</div>
 </body>
 </html>

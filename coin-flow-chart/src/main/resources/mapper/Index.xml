@@ -32,7 +32,7 @@
 			,lowest_52_week_date AS lowest52WeekDate
 			,timestamp
         FROM TB_COIN_DETAIL
-        LIMIT 5
+        WHERE market = 'KRW-BTC'
     </select>
     
     <insert id="updateCoinAllData" parameterType="Map">
