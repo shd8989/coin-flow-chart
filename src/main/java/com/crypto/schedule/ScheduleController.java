@@ -9,7 +9,7 @@ import com.crypto.service.IndexService;
 @Component
 public class ScheduleController {
 	@Autowired
-	IndexService priceService;
+	IndexService indexService;
 
 //	@Scheduled(cron = "0 0/1 * * * *")
 	@Scheduled(cron = "0/20 * * * * *")
@@ -18,6 +18,7 @@ public class ScheduleController {
 //		Date now = new Date();
 //		String strDate = sdf.format(now);
 //		System.out.println(strDate);
-		priceService.updateCoinAllData();
+		
+		indexService.getAllCoinData();
 	}
 }
