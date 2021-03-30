@@ -3,32 +3,14 @@
  */
 
 $(document).ready(function() {
-	var code = $("#selectCoin").val();
-	
-	$("#selectCoin").change(function() {
-		code = $("#selectCoin").val();
-		$.ajax({
-	        url: "/api/v1/detail",
-	        type: "GET",
-	        data: {coinCode: code},
-	        success: function(data){
-	            console.log(data);
-	            drawLineChart(data);
-	        },
-	        error: function(){
-	            alert("detail api err");
-	        }
-	    });
-	});
-
 	$.ajax({
         url: "/api/v1/detail",
         type: "GET",
-        data: {coinCode: code},
+        data: {coinCode: 'KRW-BTC'},
         success: function(data){
             console.log(data);
 //            drawLineChart(response, response2, sigunguList, tradeType, sido, selected);
-            drawLineChart(data);
+            drawLineChart(data, '비트코인');
         },
         error: function(){
             alert("detail api err");
@@ -36,12 +18,26 @@ $(document).ready(function() {
     });
 });
 
-function selectCoin(code) {
-	return code;
+function selectCoin(e) {
+	var code = e.options[e.selectedIndex].value;
+	var coinName = e.options[e.selectedIndex].text;
+	
+	$.ajax({
+        url: "/api/v1/detail",
+        type: "GET",
+        data: {coinCode: code},
+        success: function(data){
+            console.log(data);
+            drawLineChart(data, coinName);
+        },
+        error: function(){
+            alert("detail api err");
+        }
+    });
 }
 
 //function drawLineChart(data, xlabel, sigunguList, tradeType, sido, selected) {
-function drawLineChart(data) {
+function drawLineChart(data, coinName) {
 	var xlabel = [];
 	var xdata = [];
 	
@@ -64,7 +60,7 @@ function drawLineChart(data) {
 	var lineOption = null;
 	lineOption = {
 		title: {
-        	text: '비트코인 추이 차트'
+        	text: coinName + ' 추이 차트'
 	    },
 	    tooltip: {
 	        trigger: 'axis'
