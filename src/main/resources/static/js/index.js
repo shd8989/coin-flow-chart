@@ -3,13 +3,29 @@
  */
 
 $(document).ready(function() {
-	console.log('api')
+	var code = $("#selectCoin").val();
+	
+	$("#selectCoin").change(function() {
+		code = $("#selectCoin").val();
+		$.ajax({
+	        url: "/api/v1/detail",
+	        type: "GET",
+	        data: {coinCode: code},
+	        success: function(data){
+	            console.log(data);
+	            drawLineChart(data);
+	        },
+	        error: function(){
+	            alert("detail api err");
+	        }
+	    });
+	});
+
 	$.ajax({
         url: "/api/v1/detail",
         type: "GET",
-        data: $('form').serialize(),
+        data: {coinCode: code},
         success: function(data){
-            console.log('success');
             console.log(data);
 //            drawLineChart(response, response2, sigunguList, tradeType, sido, selected);
             drawLineChart(data);
@@ -19,6 +35,10 @@ $(document).ready(function() {
         }
     });
 });
+
+function selectCoin(code) {
+	return code;
+}
 
 //function drawLineChart(data, xlabel, sigunguList, tradeType, sido, selected) {
 function drawLineChart(data) {
@@ -72,8 +92,8 @@ function drawLineChart(data) {
 	    },
 	    yAxis: {
 	        type: 'value',
-	        min: Math.floor(yMinValue),
-	        max: Math.ceil(yMaxValue)
+	        min: yMinValue,
+	        max: yMaxValue
 	    },
 	    series: [
 	        {

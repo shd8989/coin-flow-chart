@@ -11,8 +11,8 @@ public class ScheduleController {
 	@Autowired
 	IndexService priceService;
 
-	@Scheduled(cron = "0 0/1 * * * *")
-//	@Scheduled(cron = "0/30 * * * * *")
+//	@Scheduled(cron = "0 0/1 * * * *")
+	@Scheduled(cron = "0/20 * * * * *")
 	public void cronJobSchedule() {
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //		Date now = new Date();

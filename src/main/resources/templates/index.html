@@ -5,10 +5,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.0.2/echarts.min.js" integrity="sha512-t9GZbGKCH5MuYUFsq5AdrhllT0kdnc2fNMizKDgLXBBXgHP2dXxjRPOzYJauAXW9OXLlSYELUqWD30k7cb0Mkg==" crossorigin="anonymous"></script>
 
 <script src="../js/index.js"></script>
+<script>
+</script>
 </head>
 <body>
 <div class="contents">
-	<div class="box">
+	<div class="box" style="">
+		<div>
+			<select name="selectCoin" id="selectCoin">
+				<option value="KRW-BTC">비트코인</option>
+				<option value="KRW-ETH" selected>이더리움</option>
+				<option value="KRW-MTL">메탈</option>
+				<option value="KRW-XRP">리플</option>
+				<option value="KRW-OMG">오미세고</option>
+				<option value="KRW-WAVES">웨이브</option>
+				<option value="KRW-QTUM">퀀텀</option>
+				<option value="KRW-STEEM">스팀</option>
+				<option value="KRW-ARDR">아더</option>
+				<option value="KRW-ARK">아크</option>
+				<option value="KRW-GRS">그로스톨코인</option>
+			</select>
+		</div>
 		<div id="lineChart" style="width:850px;height:700px;left:50px;top:50px;"></div>
 	</div>
 </div>

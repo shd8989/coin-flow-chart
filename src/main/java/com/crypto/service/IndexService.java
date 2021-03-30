@@ -24,12 +24,12 @@ import net.bitnine.agensgraph.deps.org.json.simple.JSONArray;
 
 @Service
 public class IndexService {
-	
+
 	@Autowired
 	IndexMapper indexMapper;
-	
-	public List<CoinEntity> selectCoinDetailList() {
-		return indexMapper.selectCoinDetailList();
+
+	public List<CoinEntity> selectCoinDetailList(String coinCode) {
+		return indexMapper.selectCoinDetailList(coinCode);
 	}
 	
 	public int updateCoinAllData() {
@@ -46,14 +46,17 @@ public class IndexService {
 			Iterator itr = coinResponseList.iterator();
 			List<Map> coinReqList = new ArrayList<Map>();
 			int cnt = 0;
-			
-			while(itr.hasNext()) {
-				Map map = (Map)itr.next();
+
+			while (itr.hasNext()) {
+				Map map = (Map) itr.next();
 				Map newMap = new HashMap();
-				newMap.put("market", map.get("market"));
-				coinReqList.add(newMap);
-				cnt++;
-				if(cnt >= 10) break;
+				if (map.get("market").toString().contains("KRW")) {
+					newMap.put("market", map.get("market"));
+					coinReqList.add(newMap);
+					cnt++;
+				}
+				if (cnt >= 10)
+					break;
 			}
 
 //			코인 상세정보
