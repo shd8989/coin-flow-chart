@@ -24,23 +24,21 @@ $(document).ready(function() {
 function drawLineChart(data) {
 	var xlabel = [];
 	var xdata = [];
+	
 	var arr = data.filter((v) => {
 		xlabel.push(v.timestamp);
 		xdata.push(v.openingPrice + v.signedChangePrice);
-		console.log(v)
-	})
-	console.log(xdata)
+	});
 	
-	var yValueMax = 0;
-	function arrayMax(arr) {
-		var len = arr.length;
-		while(len--) {
-			if(arr[len].price > yValueMax) {
-				yValueMax = arr[len].price;
-			}
-		}
-	}
-//	arrayMax(ydata)
+	var yMaxValue = xdata.reduce((prev, cur) => {
+		return prev > cur ? prev : cur;
+	});
+	var yMinValue = xdata.reduce((prev, cur) => {
+		return prev > cur ? cur : prev;
+	});
+	
+	yMinValue = setMinDigitNum(yMinValue)
+	yMaxValue = setMaxDigitNum(yMaxValue)
 	
 	var lineChart = echarts.init(document.getElementById('lineChart'));
 	var lineOption = null;
@@ -74,7 +72,8 @@ function drawLineChart(data) {
 	    },
 	    yAxis: {
 	        type: 'value',
-	        min: 65000000
+	        min: Math.floor(yMinValue),
+	        max: Math.ceil(yMaxValue)
 	    },
 	    series: [
 	        {
@@ -92,4 +91,33 @@ function drawLineChart(data) {
 	    ]
 	};
 	lineChart.setOption(lineOption, true);
+}
+
+function setMinDigitNum(num) {
+	var digit = 0;
+	while(num > 10) {
+		num = num / 10;
+		digit++;
+	}
+	num = Math.floor(num);
+	
+	for(var j = 0; j < digit; j++) {
+		num = num * 10
+	}
+	
+	return num;
+}
+function setMaxDigitNum(num) {
+	var digit = 0;
+	while(num > 10) {
+		num = num / 10;
+		digit++;
+	}
+	num = Math.ceil(num);
+	
+	for(var j = 0; j < digit; j++) {
+		num = num * 10
+	}
+	
+	return num;
 }
