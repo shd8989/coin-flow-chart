@@ -53,8 +53,22 @@ function drawLineChart(data, coinName) {
 		return prev > cur ? cur : prev;
 	});
 	
-	yMinValue = setMinDigitNum(yMinValue)
-	yMaxValue = setMaxDigitNum(yMaxValue)
+	diff = setNumDiff(yMinValue, yMaxValue)
+	yNewMinValue = setMinDigitNum(yMinValue)
+	yNewMaxValue = setMaxDigitNum(yMaxValue)
+	console.log(yNewMaxValue, yNewMinValue, yMaxValue, yMinValue, diff)
+	/*
+	if(yNewMaxValue - yNewMinValue > diff) {
+		yNewMaxValue = yNewMinValue + diff;
+	}
+	else if(yMaxValue - yMinValue < diff) {
+		yNewMaxValue = yNewMaxValue - diff;
+	}
+	if(yNewMinValue < yMinValue) {
+		yNewMinValue = yNewMaxValue - diff;
+	}
+	*/
+	console.log(yNewMaxValue, yNewMinValue, yMaxValue, yMinValue, diff)
 	
 	var lineChart = echarts.init(document.getElementById('lineChart'));
 	var lineOption = null;
@@ -109,8 +123,8 @@ function drawLineChart(data, coinName) {
 	    },
 	    yAxis: {
 	        type: 'value',
-	        min: yMinValue,
-	        max: yMaxValue
+	        min: yNewMinValue,
+	        max: yNewMaxValue
 	    },
 	    series: [
 	        {
@@ -136,7 +150,15 @@ function setMinDigitNum(num) {
 		num = num / 10;
 		digit++;
 	}
-	num = Math.floor(num);
+	numFloorAbs = num - Math.floor(num);
+	console.log(Math.floor(num), num, numFloorAbs)
+	
+	if(numFloorAbs < 0.5) {
+		num = Math.floor(num);
+	}
+	else {
+		num = Math.floor(num) + 0.5;
+	}
 	
 	for(var j = 0; j < digit; j++) {
 		num = num * 10
@@ -150,11 +172,36 @@ function setMaxDigitNum(num) {
 		num = num / 10;
 		digit++;
 	}
-	num = Math.ceil(num);
+	numCeilAbs = Math.ceil(num) - num;
+	console.log(Math.ceil(num), num, numCeilAbs)
+	
+	if(numCeilAbs > 0.5) {
+		num = Math.ceil(num) - 0.5;
+	}
+	else {
+		num = Math.ceil(num)
+	}
 	
 	for(var j = 0; j < digit; j++) {
 		num = num * 10
 	}
 	
 	return num;
+}
+function setNumDiff(min, max) {
+	var diff = max-min
+	console.log(diff)
+	
+	var digit = 0;
+	while(diff > 10) {
+		diff = diff / 10;
+		digit++;
+	}
+	numCeilAbs = Math.ceil(diff);
+	
+	for(var j = 0; j < digit; j++) {
+		numCeilAbs = numCeilAbs * 10
+	}
+	
+	return numCeilAbs;
 }
