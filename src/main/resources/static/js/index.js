@@ -63,7 +63,14 @@ function drawLineChart(data, coinName) {
         	text: coinName + ' 추이 차트'
 	    },
 	    tooltip: {
-	        trigger: 'axis'
+	        trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				animation: false,
+				label: {
+					backgroundColor: '#505765'
+				}
+			}
 	    },
 	    /*
 	    legend: {
@@ -73,7 +80,7 @@ function drawLineChart(data, coinName) {
 	    grid: {
 	        left: '3%',
 	        right: '4%',
-	        bottom: '3%',
+	        bottom: 80,
 	        containLabel: true
 	    },
 	    toolbox: {
@@ -81,6 +88,20 @@ function drawLineChart(data, coinName) {
 	            saveAsImage: {}
 	        }
 	    },
+	    dataZoom: [
+			{
+				show: true,
+				realtime: true,
+				start: 80,
+				end: 100
+			},
+			{
+				type: 'inside',
+				realtime: true,
+				start: 80,
+				end: 100
+			}
+		],
 	    xAxis: {
 	        type: 'category',
 	        boundaryGap: false,
