@@ -36,13 +36,12 @@ function selectCoin(e) {
     });
 }
 
-//function drawLineChart(data, xlabel, sigunguList, tradeType, sido, selected) {
 function drawLineChart(data, coinName) {
 	var xlabel = [];
 	var xdata = [];
 	
 	var arr = data.filter((v) => {
-		xlabel.push(v.timestamp);
+		xlabel.push(v.timestamp.substring(0,10) + ' ' + v.timestamp.substring(11,19));
 		xdata.push(v.openingPrice + v.signedChangePrice);
 	});
 	
