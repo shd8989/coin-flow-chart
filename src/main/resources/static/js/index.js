@@ -143,16 +143,16 @@ var upBorderColor = '#8A0000';
 var downColor = '#00da3c';
 var downBorderColor = '#008F28';
 
-function calculateMA(dayCount, tradeVolumeList) {
+function calculateMA(dayCount, resultList) {
     var result = [];
-    for (var i = 0, len = tradeVolumeList.length; i < len; i++) {
+    for (var i = 0, len = resultList.length; i < len; i++) {
         if (i < dayCount) {
             result.push('-');
             continue;
         }
         var sum = 0;
         for (var j = 0; j < dayCount; j++) {
-            sum += tradeVolumeList[i - j][1];
+            sum += resultList[i - j][1];
         }
         result.push(sum / dayCount);
     }
@@ -166,6 +166,7 @@ function drawLineChart(data, coinName) {
 	var closePriceList = [];
 	var lowPriceList = [];
 	var highPriceList = [];
+	var resultList = [];
 	var tradeVolumeList = [];
 //	values => date, open, close, low, high
 	
@@ -175,9 +176,9 @@ function drawLineChart(data, coinName) {
 		curPriceList.push(v.openingPrice + v.signedChangePrice);
 		openPriceList.push(v.openingPrice);
 		closePriceList.push(v.prevClosingPrice);
-		lowPriceList.push(v.lowPrice);
-		highPriceList.push(v.highPrice);
-//		tradeVolumeList.push(v.tradeVolume);
+		lowPriceList.push((v.highPrice+v.lowPrice)/2 * (1 - (v.tradeVolume < 1 ? v.tradeVolume : 1)));
+		highPriceList.push((v.highPrice+v.lowPrice)/2 * (1 + (v.tradeVolume < 1 ? v.tradeVolume : 1)));
+		tradeVolumeList.push((v.openingPrice + v.signedChangePrice) * (1 + v.tradeVolume));
 	});
 	for(var i=0; i<data.length; i++) {
 		var subList = [];
@@ -185,7 +186,7 @@ function drawLineChart(data, coinName) {
 		subList.push(closePriceList[i]);
 		subList.push(lowPriceList[i]);
 		subList.push(highPriceList[i]);
-		tradeVolumeList.push(subList);
+		resultList.push(subList);
 	}
 	console.log(tradeVolumeList)
 	
@@ -213,7 +214,7 @@ function drawLineChart(data, coinName) {
 	        }
 	    },
 	    legend: {
-	        data: ['현재가', 'MA5', 'MA10', 'MA20', 'MA30']
+	        data: ['현재가', 'MA1', 'MA5']
 	    },
 	    grid: {
 	        left: '10%',
@@ -255,7 +256,7 @@ function drawLineChart(data, coinName) {
 	        {
 	            name: '현재가',
 	            type: 'candlestick',
-	            data: tradeVolumeList,
+	            data: resultList,
 	            itemStyle: {
 	                color: upColor,
 	                color0: downColor,
@@ -349,18 +350,18 @@ function drawLineChart(data, coinName) {
 	            }
 	        },
 	        {
-	            name: 'MA5',
+	            name: 'MA1',
 	            type: 'line',
-	            data: calculateMA(5, tradeVolumeList),
+	            data: calculateMA(1, resultList),
 	            smooth: true,
 	            lineStyle: {
 	                opacity: 0.5
 	            }
 	        },
 	        {
-	            name: 'MA10',
+	            name: 'MA5',
 	            type: 'line',
-	            data: calculateMA(10, tradeVolumeList),
+	            data: calculateMA(5, resultList),
 	            smooth: true,
 	            lineStyle: {
 	                opacity: 0.5
