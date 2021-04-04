@@ -143,17 +143,6 @@ var upBorderColor = '#8A0000';
 var downColor = '#00da3c';
 var downBorderColor = '#008F28';
 
-function splitData(rawData) {
-    var values = []
-    for (var i = 0; i < rawData.length; i++) {
-//        categoryData.push(rawData[i].splice(0, 1)[0]);
-        values.push(rawData[i])
-    }
-    return {
-        values: values
-    };
-}
-
 function calculateMA(dayCount, tradeVolumeList) {
     var result = [];
     for (var i = 0, len = tradeVolumeList.length; i < len; i++) {
@@ -181,7 +170,8 @@ function drawLineChart(data, coinName) {
 //	values => date, open, close, low, high
 	
 	var arr = data.filter((v) => {
-		dateList.push(v.timestamp.substring(0,10) + ' ' + v.timestamp.substring(11,19));
+		dateList.push(v.tradeDateKst.substring(0,4) + '-' + v.tradeDateKst.substring(4,6)	 + '-' + v.tradeDateKst.substring(6,8)
+						 + ' ' + v.tradeTimeKst.substring(0,2) + ':' + v.tradeTimeKst.substring(2,4) + ':' + v.tradeTimeKst.substring(4,6));
 		curPriceList.push(v.openingPrice + v.signedChangePrice);
 		openPriceList.push(v.openingPrice);
 		closePriceList.push(v.prevClosingPrice);
@@ -191,7 +181,6 @@ function drawLineChart(data, coinName) {
 	});
 	for(var i=0; i<data.length; i++) {
 		var subList = [];
-		subList.push(dateList[i]);
 		subList.push(openPriceList[i]);
 		subList.push(closePriceList[i]);
 		subList.push(lowPriceList[i]);
@@ -372,24 +361,6 @@ function drawLineChart(data, coinName) {
 	            name: 'MA10',
 	            type: 'line',
 	            data: calculateMA(10, tradeVolumeList),
-	            smooth: true,
-	            lineStyle: {
-	                opacity: 0.5
-	            }
-	        },
-	        {
-	            name: 'MA20',
-	            type: 'line',
-	            data: calculateMA(20, tradeVolumeList),
-	            smooth: true,
-	            lineStyle: {
-	                opacity: 0.5
-	            }
-	        },
-	        {
-	            name: 'MA30',
-	            type: 'line',
-	            data: calculateMA(30, tradeVolumeList),
 	            smooth: true,
 	            lineStyle: {
 	                opacity: 0.5
