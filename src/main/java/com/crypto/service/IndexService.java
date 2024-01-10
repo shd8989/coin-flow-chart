@@ -121,7 +121,7 @@ public class IndexService {
 					newMap.put("highest_52_week_date", map.get("highest_52_week_date"));
 					newMap.put("lowest_52_week_price", map.get("lowest_52_week_price"));
 					newMap.put("lowest_52_week_date", map.get("lowest_52_week_date"));
-	//				newMap.put("timestamp", map.get("timestamp"));
+	//				newMap.put("timestp", map.get("timestp"));
 					coinDetailReqList.add(newMap);
 				}
 			}

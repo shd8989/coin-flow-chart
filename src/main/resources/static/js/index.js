@@ -41,7 +41,7 @@ function drawLineChart1(data, coinName) {
 	var curPriceList = [];
 	
 	var arr = data.filter((v) => {
-		xlabel.push(v.timestamp.substring(0,10) + ' ' + v.timestamp.substring(11,19));
+		xlabel.push(v.timestp.substring(0,10) + ' ' + v.timestp.substring(11,19));
 		curPriceList.push(v.openingPrice + v.signedChangePrice);
 	});
 	

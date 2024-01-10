@@ -1,4 +1,4 @@
-[tb_coin_detail]
+-- tb_coin_detail
 create table tb_coin_detail (
 market                        varchar(30) not null,
 trade_date                    varchar(30),
@@ -25,6 +25,6 @@ highest_52_week_price         double precision,
 highest_52_week_date          varchar(30),
 lowest_52_week_price          double precision,
 lowest_52_week_date           varchar(30),
-timestamp                     timestamp,
-PRIMARY KEY(market, timestamp)
+timestp                       timestamp,
+PRIMARY KEY(market, timestp)
 );

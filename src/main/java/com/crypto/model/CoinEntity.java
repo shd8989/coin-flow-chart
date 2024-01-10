@@ -61,5 +61,5 @@ public class CoinEntity {
 	@JsonProperty
 	private String lowest52WeekDate;
 	@JsonProperty
-	private Timestamp timestamp;
+	private Timestamp timestp;
 }

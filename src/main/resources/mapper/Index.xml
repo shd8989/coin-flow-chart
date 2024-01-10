@@ -30,7 +30,7 @@
 			,highest_52_week_date AS highest52WeekDate
 			,lowest_52_week_price AS lowest52WeekPrice
 			,lowest_52_week_date AS lowest52WeekDate
-			,timestamp
+			,timestp
         FROM TB_COIN_DETAIL
         WHERE market = #{coinCode}
     </select>
@@ -63,7 +63,7 @@
 			,highest_52_week_date
 			,lowest_52_week_price
 			,lowest_52_week_date
-			,timestamp
+			,timestp
 		)
 		VALUES
 		<foreach collection="list" item="item" separator=",">
