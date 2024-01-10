@@ -7,12 +7,13 @@ server:
   port: 8180
 spring:
   datasource:
-    url: jdbc:agensgraph://localhost:5432/postgres
-    driver-class-name: net.bitnine.agensgraph.Driver
-    username: postgres
-    password: agensgraph
+#    url: jdbc:agensgraph://localhost:5430/postgres
+    url: jdbc:postgresql://localhost:5430/postgres
+    driver-class-name: org.postgresql.Driver
+    username: hdseo
+    password: 1234
     hikari:
-      connection-init-sql: set graph_path=crypto
+#      connection-init-sql: set graph_path=crypto
       connection-test-query: SELECT 1
       maximum-pool-size: 5
   thymeleaf:
