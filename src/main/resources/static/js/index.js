@@ -48,7 +48,7 @@ function splitData(rawData) {
       if(i == 0) {
       console.log(rawData[0]);
       }
-    categoryData.push(rawData[i].tradeDateKst);
+    categoryData.push(rawData[i].tradeDateKst + '-' + rawData[i].tradeTimeKst);
     values.push([rawData[i].prevClosingPrice, rawData[i].signedChangePrice, rawData[i].lowPrice, rawData[i].highPrice, rawData[i].accTradeVolume24h]);
     volumes.push([i, rawData[i].accTradeVolume24h, rawData[i].prevClosingPrice > rawData[i].signedChangePrice ? 1 : -1]);
     // categoryData(1) - tradeDateKst-tradeTimeKst
