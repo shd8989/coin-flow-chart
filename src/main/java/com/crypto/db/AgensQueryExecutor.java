@@ -14,9 +14,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.bitnine.agensgraph.graph.Edge;
-import net.bitnine.agensgraph.graph.Vertex;
-
 public class AgensQueryExecutor {
 
     private Logger logger = LoggerFactory.getLogger(AgensQueryExecutor.class);
@@ -61,18 +58,19 @@ public class AgensQueryExecutor {
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData metaData = resultSet.getMetaData();
             int columnCount = metaData.getColumnCount();
+            // Todo. 필요한 로직인지 확인 필요
             while (resultSet.next()) {
                 Map<String, Object> rowData = new HashMap<String, Object>();
                 for (int column = 1; column <= columnCount; column++) {
                     String columnLabel = metaData.getColumnLabel(column);
                     Object columnValue = resultSet.getObject(columnLabel);
-                    if (columnValue instanceof Vertex) {
-                        Vertex vertex = (Vertex) columnValue;
-                        rowData = (Map<String, Object>) vertex.getProperties().getTypedValue();
-                    } else if(columnValue instanceof Edge) {
-                        Edge edge = (Edge) columnValue;
-                        rowData = (Map<String, Object>) edge.getProperties().getTypedValue();
-                    }
+//                    if (columnValue instanceof Vertex) {
+//                        Vertex vertex = (Vertex) columnValue;
+//                        rowData = (Map<String, Object>) vertex.getProperties().getTypedValue();
+//                    } else if(columnValue instanceof Edge) {
+//                        Edge edge = (Edge) columnValue;
+//                        rowData = (Map<String, Object>) edge.getProperties().getTypedValue();
+//                    }
                     resultList.add(rowData);
                 }
             }

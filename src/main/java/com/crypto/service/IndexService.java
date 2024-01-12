@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.json.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import com.crypto.db.mapper.IndexMapper;
 import com.crypto.model.CoinEntity;
 import com.crypto.model.IndexEntity;
-
-import net.bitnine.agensgraph.deps.org.json.simple.JSONArray;
 
 @Service
 public class IndexService {
@@ -40,8 +40,8 @@ public class IndexService {
 			
 			RestTemplate coinRestTemplate = new RestTemplate();
 			// 코인 목록 정보
-//			https://api.upbit.com/v1/market/all
-			ResponseEntity<JSONArray> coinResponseEntity = coinRestTemplate.exchange("https://api.upbit.com/v1/market/all", HttpMethod.GET, entity, JSONArray.class);
+			String coinListUrl = "https://api.upbit.com/v1/market/all";
+			ResponseEntity<ArrayList> coinResponseEntity = coinRestTemplate.exchange(coinListUrl, HttpMethod.GET, entity, ArrayList.class);
 			List<IndexEntity> coinResponseList = (List) coinResponseEntity.getBody();
 			Iterator itr = coinResponseList.iterator();
 			
@@ -85,12 +85,12 @@ public class IndexService {
 			HttpEntity entity = new HttpEntity(httpHeaders);
 			
 	//		코인 상세정보
-	//		https://api.upbit.com/v1/ticker?markets=
+			String coinDetailUrl = "https://api.upbit.com/v1/ticker?markets=";
 			RestTemplate coinDetailRestTemplate = new RestTemplate();
 			List<Map> coinDetailReqList = new ArrayList<Map>();
 			for(int i=0; i<coinReqList.size(); i++) {
-				ResponseEntity<JSONArray> coinDetailListResponseEntity = coinDetailRestTemplate.exchange("https://api.upbit.com/v1/ticker?markets="+coinReqList.get(i).get("market"), HttpMethod.GET, entity, JSONArray.class);
-				List<IndexEntity> coinDetailResponseList = (List) coinDetailListResponseEntity.getBody();
+				ResponseEntity<ArrayList> coinDetailListResponseEntity = coinDetailRestTemplate.exchange(coinDetailUrl+coinReqList.get(i).get("market"), HttpMethod.GET, entity, ArrayList.class);
+				List<CoinEntity> coinDetailResponseList = (List) coinDetailListResponseEntity.getBody();
 				Iterator itr1 = coinDetailResponseList.iterator();
 				
 				while(itr1.hasNext()) {
@@ -125,7 +125,6 @@ public class IndexService {
 					coinDetailReqList.add(newMap);
 				}
 			}
-	//		System.out.println(coinDetailReqList);
 			return indexMapper.updateCoinAllData(coinDetailReqList);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
