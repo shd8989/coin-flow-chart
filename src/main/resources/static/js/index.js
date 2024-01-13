@@ -36,8 +36,8 @@ const downColor = '#ec0000';
 
 function splitData(rawData) {
 //  tradeDateKst-tradeTimeKst
-//  prevClosingPrice
-//  signedChangePrice
+//  openingPrice
+//  tradePrice
 //  lowPrice
 //  highPrice
 //  accTradeVolume24h
@@ -45,14 +45,11 @@ function splitData(rawData) {
   let values = [];
   let volumes = [];
   for (let i = 0; i < rawData.length; i++) {
-      if(i == 0) {
-      console.log(rawData[0]);
-      }
-    categoryData.push(rawData[i].tradeDateKst + '-' + rawData[i].tradeTimeKst);
-    values.push([rawData[i].prevClosingPrice, rawData[i].signedChangePrice, rawData[i].lowPrice, rawData[i].highPrice, rawData[i].accTradeVolume24h]);
-    volumes.push([i, rawData[i].accTradeVolume24h, rawData[i].prevClosingPrice > rawData[i].signedChangePrice ? 1 : -1]);
+    categoryData.push(rawData[i].tradeDateKst);
+    values.push([rawData[i].openingPrice, rawData[i].tradePrice, rawData[i].lowPrice, rawData[i].highPrice, rawData[i].accTradeVolume24h]);
+    volumes.push([i, rawData[i].accTradeVolume24h, rawData[i].openingPrice > rawData[i].tradePrice ? 1 : -1]);
     // categoryData(1) - tradeDateKst-tradeTimeKst
-    // values(5) - prevClosingPrice, signedChangePrice, lowPrice, highPrice, accTradeVolume24h
+    // values(5) - open, close, low, high, volume
     // volumes(3) - accTradeVolume24h
   }
   return {

@@ -31,7 +31,7 @@ public class CoinEntity {
 	@JsonProperty
 	private Double lowPrice;
 	@JsonProperty
-	private Double accTradePrice;
+	private Double tradePrice;
 	@JsonProperty
 	private Double prevClosingPrice;
 	@JsonProperty
@@ -46,6 +46,8 @@ public class CoinEntity {
 	private Double signedChangeRate;
 	@JsonProperty
 	private Double tradeVolume;
+	@JsonProperty
+	private Double accTradePrice;
 	@JsonProperty
 	private Double accTradePrice24h;
 	@JsonProperty
