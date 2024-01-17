@@ -1,17 +1,17 @@
-$(document).ready(function() {
-	$.ajax({
-        url: "/api/v1/detail",
-        type: "GET",
-        data: {coinCode: 'KRW-BTC'},
-        success: function(data){
-            console.log(data);
-            drawCandlestick(data, '비트코인');
-        },
-        error: function(){
-            alert("detail api err");
-        }
-    });
-});
+//$(document).ready(function() {
+//	$.ajax({
+//        url: "/api/v1/detail",
+//        type: "GET",
+//        data: {coinCode: 'KRW-BTC'},
+//        success: function(data){
+//            console.log(data);
+//            drawCandlestick(data, '비트코인');
+//        },
+//        error: function(){
+//            alert("detail api err");
+//        }
+//    });
+//});
 
 function selectCoin(e) {
 	var code = e.options[e.selectedIndex].value;
