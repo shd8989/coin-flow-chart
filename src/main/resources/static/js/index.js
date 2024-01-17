@@ -5,7 +5,7 @@ $(document).ready(function() {
         data: {coinCode: 'KRW-BTC'},
         success: function(data){
             console.log(data);
-            drawCandlestick(data);
+            drawCandlestick(data, '비트코인');
         },
         error: function(){
             alert("detail api err");
@@ -23,7 +23,7 @@ function selectCoin(e) {
         data: {coinCode: code},
         success: function(data){
             console.log(data);
-//            drawCandlestick(data, coinName);
+            drawCandlestick(data, coinName);
         },
         error: function(){
             alert("detail api err");
@@ -74,7 +74,7 @@ function calculateMA(dayCount, data) {
   return result;
 }
 
-function drawCandlestick(rawData) {
+function drawCandlestick(rawData, coinName) {
     console.log('drawCandlestick');
 //    console.log(rawData);
   var data = splitData(rawData);
@@ -85,7 +85,7 @@ function drawCandlestick(rawData) {
       legend: {
         bottom: 10,
         left: 'center',
-        data: ['Dow-Jones index', 'MA5', 'MA10', 'MA20', 'MA30']
+        data: [coinName, 'MA5', 'MA10', 'MA20', 'MA30']
       },
       tooltip: {
         trigger: 'axis',
@@ -223,7 +223,7 @@ function drawCandlestick(rawData) {
       ],
       series: [
         {
-          name: 'Dow-Jones index',
+          name: coinName,
           type: 'candlestick',
           data: data.values,
           itemStyle: {
