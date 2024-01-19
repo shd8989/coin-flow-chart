@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.crypto.model.CandleEntity;
 import org.json.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,7 @@ public class IndexService {
 	//		코인 상세정보
 			String coinDetailUrl = "https://api.upbit.com/v1/ticker?markets=";
 			RestTemplate coinDetailRestTemplate = new RestTemplate();
-			List<Map> coinDetailReqList = new ArrayList<Map>();
+			List<Map> coinDetailResList = new ArrayList<Map>();
 			for(int i=0; i<coinReqList.size(); i++) {
 				ResponseEntity<ArrayList> coinDetailListResponseEntity = coinDetailRestTemplate.exchange(coinDetailUrl+coinReqList.get(i).get("market"), HttpMethod.GET, entity, ArrayList.class);
 				List<CoinEntity> coinDetailResponseList = (List) coinDetailListResponseEntity.getBody();
@@ -121,14 +122,33 @@ public class IndexService {
 					newMap.put("highest_52_week_date", map.get("highest_52_week_date"));
 					newMap.put("lowest_52_week_price", map.get("lowest_52_week_price"));
 					newMap.put("lowest_52_week_date", map.get("lowest_52_week_date"));
-	//				newMap.put("timestp", map.get("timestp"));
-					coinDetailReqList.add(newMap);
+					newMap.put("timestp", map.get("timestp"));
+					coinDetailResList.add(newMap);
 				}
 			}
-			return indexMapper.updateCoinAllData(coinDetailReqList);
+			return indexMapper.updateCoinAllData(coinDetailResList);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return 0;
+	}
+
+	public List<CandleEntity> selectCandleData(String market, int candleCount) {
+		// todo. 분, 일, 주, 월을 구분하되 우선적으로는 분, 일만 가져 오는것을 고려
+		List<CandleEntity> candleResponseList = new ArrayList<CandleEntity>();
+		try {
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			HttpEntity entity = new HttpEntity(httpHeaders);
+
+			// candle 정보
+			String candleUrl = String.format("https://api.upbit.com/v1/candles/minutes/1?market=%s&count=%d", market, candleCount);
+			RestTemplate candleRestTemplate = new RestTemplate();
+			ResponseEntity<ArrayList> candleListResponseEntity = candleRestTemplate.exchange(candleUrl, HttpMethod.GET, entity, ArrayList.class);
+			candleResponseList = (List) candleListResponseEntity.getBody();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return candleResponseList;
 	}
 }

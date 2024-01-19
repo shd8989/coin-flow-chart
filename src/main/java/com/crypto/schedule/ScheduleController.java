@@ -11,8 +11,8 @@ public class ScheduleController {
 	@Autowired
 	IndexService indexService;
 
-	@Scheduled(cron = "0/20 * * * * *")
-	public void cronJobSchedule() {
-		indexService.getAllCoinData();
-	}
+//	@Scheduled(cron = "0/20 * * * * *")
+//	public void cronJobSchedule() {
+//		indexService.getAllCoinData();
+//	}
 }

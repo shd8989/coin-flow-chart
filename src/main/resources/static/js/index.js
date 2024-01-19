@@ -285,7 +285,7 @@ function drawCandlestick(rawData, coinName) {
     areas: [
       {
         brushType: 'lineX',
-        coordRange: ['2024-01-10', '2024-01-20'],
+        coordRange: ['2024-01-01', '2024-01-20'],
         xAxisIndex: 0
       }
     ]
