@@ -5,9 +5,7 @@ import java.util.Map;
 
 import com.crypto.model.CandleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.crypto.model.CoinEntity;
 import com.crypto.service.IndexService;
@@ -24,8 +22,8 @@ public class IndexRestController {
 		return indexService.selectCoinDetailList(coinCode);
 	}
 
-	@RequestMapping("/candleData")
-	public List<CandleEntity> selectCandleData(@RequestParam(value="market", required=false) String market, @RequestParam(value="candleCount", required=false) int candleCount) {
-		return indexService.selectCandleData(market, candleCount);
+	@RequestMapping(value = "/candleData", method = RequestMethod.POST)
+	public List<CandleEntity> selectCandleData(@RequestBody Map reqMap) {
+		return indexService.selectCandleData(reqMap);
 	}
 }

@@ -133,19 +133,41 @@ public class IndexService {
 		return 0;
 	}
 
-	public List<CandleEntity> selectCandleData(String market, int candleCount) {
-		// todo. 분, 일, 주, 월을 구분하되 우선적으로는 분, 일만 가져 오는것을 고려
+	public List<CandleEntity> selectCandleData(Map reqMap) {
 		List<CandleEntity> candleResponseList = new ArrayList<CandleEntity>();
 		try {
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			HttpEntity entity = new HttpEntity(httpHeaders);
+			RestTemplate candleRestTemplate = new RestTemplate();
+			String candleUrl = "";
+			ResponseEntity<ArrayList> candleListResponseEntity;
 
 			// candle 정보
-			String candleUrl = String.format("https://api.upbit.com/v1/candles/minutes/1?market=%s&count=%d", market, candleCount);
-			RestTemplate candleRestTemplate = new RestTemplate();
-			ResponseEntity<ArrayList> candleListResponseEntity = candleRestTemplate.exchange(candleUrl, HttpMethod.GET, entity, ArrayList.class);
-			candleResponseList = (List) candleListResponseEntity.getBody();
+			if("min".equals(reqMap.get("candleType"))) {
+				candleUrl = "https://api.upbit.com/v1/candles/minutes/1?market=" + reqMap.get("market");
+				if(reqMap.get("to") != null) {
+					candleUrl += "&to=" + reqMap.get("candleCount");
+				}
+				if(reqMap.get("candleCount") != null) {
+					candleUrl += "&count=" + reqMap.get("candleCount");
+				}
+				candleListResponseEntity = candleRestTemplate.exchange(candleUrl, HttpMethod.GET, entity, ArrayList.class);
+				candleResponseList = (List) candleListResponseEntity.getBody();
+			} else if("day".equals(reqMap.get("candleType"))) {
+				candleUrl = "https://api.upbit.com/v1/candles/days?market=" + reqMap.get("market");
+				if(reqMap.get("to") != null) {
+					candleUrl += "&to=" + reqMap.get("candleCount");
+				}
+				if(reqMap.get("candleCount") != null) {
+					candleUrl += "&count=" + reqMap.get("candleCount");
+				}
+				if(reqMap.get("convertingPriceUnit") != null) {
+					candleUrl += "&convertingPriceUnit=" + reqMap.get("convertingPriceUnit");
+				}
+				candleListResponseEntity = candleRestTemplate.exchange(candleUrl, HttpMethod.GET, entity, ArrayList.class);
+				candleResponseList = (List) candleListResponseEntity.getBody();
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
