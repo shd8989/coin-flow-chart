@@ -179,7 +179,7 @@ $(document).ready(function() {
         contentType: "application/json",
         success: function(data){
             if(data.length > 0) {
-                drawCandlestick(data, '비트코인');
+                drawCandlestick(data.reverse(), '비트코인');
             } else {
                 alert("API call error");
             }

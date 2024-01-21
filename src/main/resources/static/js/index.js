@@ -15,7 +15,7 @@ function selectCoin(e) {
         success: function(data){
             console.log(data);
             if(data.length > 0) {
-                drawCandlestick(data, coinName);
+                drawCandlestick(data.reverse(), coinName);
             } else {
                 alert("API call error");
             }
