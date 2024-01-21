@@ -1,29 +1,24 @@
-//$(document).ready(function() {
-//	$.ajax({
-//        url: "/api/v1/detail",
-//        type: "GET",
-//        data: {coinCode: 'KRW-BTC'},
-//        success: function(data){
-//            console.log(data);
-//            drawCandlestick(data, '비트코인');
-//        },
-//        error: function(){
-//            alert("detail api err");
-//        }
-//    });
-//});
-
 function selectCoin(e) {
 	var code = e.options[e.selectedIndex].value;
 	var coinName = e.options[e.selectedIndex].text;
 	
 	$.ajax({
-        url: "/api/v1/detail",
-        type: "GET",
-        data: {coinCode: code},
+        url: "/api/v1/candleData",
+        type: "POST",
+        data: JSON.stringify({
+            candleType: 'min',
+            market: code,
+            candleCount: 100
+        }),
+        dataType: 'json',
+        contentType: "application/json",
         success: function(data){
             console.log(data);
-            drawCandlestick(data, coinName);
+            if(data.length > 0) {
+                drawCandlestick(data, coinName);
+            } else {
+                alert("API call error");
+            }
         },
         error: function(){
             alert("detail api err");
@@ -35,19 +30,13 @@ const upColor = '#00da3c';
 const downColor = '#ec0000';
 
 function splitData(rawData) {
-//  tradeDateKst-tradeTimeKst
-//  openingPrice
-//  tradePrice
-//  lowPrice
-//  highPrice
-//  accTradeVolume24h
   let categoryData = [];
   let values = [];
   let volumes = [];
   for (let i = 0; i < rawData.length; i++) {
-    categoryData.push(rawData[i].tradeDateKst);
-    values.push([rawData[i].openingPrice, rawData[i].tradePrice, rawData[i].lowPrice, rawData[i].highPrice, rawData[i].accTradeVolume24h]);
-    volumes.push([i, rawData[i].accTradeVolume24h, rawData[i].openingPrice > rawData[i].tradePrice ? 1 : -1]);
+    categoryData.push(rawData[i].candle_date_time_kst);
+    values.push([rawData[i].opening_price, rawData[i].trade_price, rawData[i].low_price, rawData[i].high_price, rawData[i].candle_acc_trade_volume]);
+    volumes.push([i, rawData[i].candle_acc_trade_volume, rawData[i].opening_price > rawData[i].trade_price ? 1 : -1]);
     // categoryData(1) - tradeDateKst-tradeTimeKst
     // values(5) - open, close, low, high, volume
     // volumes(3) - accTradeVolume24h
@@ -75,8 +64,6 @@ function calculateMA(dayCount, data) {
 }
 
 function drawCandlestick(rawData, coinName) {
-    console.log('drawCandlestick');
-//    console.log(rawData);
   var data = splitData(rawData);
   var candlestickChart = echarts.init(document.getElementById('candlestickChart'));
   candlestickChart.setOption(
@@ -209,7 +196,7 @@ function drawCandlestick(rawData, coinName) {
         {
           type: 'inside',
           xAxisIndex: [0, 1],
-          start: 98,
+          start: 90,
           end: 100
         },
         {
@@ -217,7 +204,7 @@ function drawCandlestick(rawData, coinName) {
           xAxisIndex: [0, 1],
           type: 'slider',
           top: '85%',
-          start: 98,
+          start: 90,
           end: 100
         }
       ],

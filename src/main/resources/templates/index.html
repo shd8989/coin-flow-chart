@@ -166,14 +166,23 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.0.2/echarts.min.js" integrity="sha512-t9GZbGKCH5MuYUFsq5AdrhllT0kdnc2fNMizKDgLXBBXgHP2dXxjRPOzYJauAXW9OXLlSYELUqWD30k7cb0Mkg==" crossorigin="anonymous"></script>
 <script th:inline="javascript">
-    $(document).ready(function() {
+$(document).ready(function() {
 	$.ajax({
-        url: "/api/v1/detail",
-        type: "GET",
-        data: {coinCode: 'KRW-BTC'},
+        url: "/api/v1/candleData",
+        type: "POST",
+        data: JSON.stringify({
+            candleType: 'min',
+            market: 'KRW-BTC',
+            candleCount: 100
+        }),
+        dataType: 'json',
+        contentType: "application/json",
         success: function(data){
-            console.log(data);
-            drawCandlestick(data, '비트코인');
+            if(data.length > 0) {
+                drawCandlestick(data, '비트코인');
+            } else {
+                alert("API call error");
+            }
         },
         error: function(){
             alert("detail api err");
