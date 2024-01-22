@@ -147,7 +147,7 @@ public class IndexService {
 			if("min".equals(reqMap.get("candleType"))) {
 				candleUrl = "https://api.upbit.com/v1/candles/minutes/1?market=" + reqMap.get("market");
 				if(reqMap.get("to") != null) {
-					candleUrl += "&to=" + reqMap.get("candleCount");
+					candleUrl += "&to=" + reqMap.get("to");
 				}
 				if(reqMap.get("candleCount") != null) {
 					candleUrl += "&count=" + reqMap.get("candleCount");
@@ -157,7 +157,7 @@ public class IndexService {
 			} else if("day".equals(reqMap.get("candleType"))) {
 				candleUrl = "https://api.upbit.com/v1/candles/days?market=" + reqMap.get("market");
 				if(reqMap.get("to") != null) {
-					candleUrl += "&to=" + reqMap.get("candleCount");
+					candleUrl += "&to=" + reqMap.get("to");
 				}
 				if(reqMap.get("candleCount") != null) {
 					candleUrl += "&count=" + reqMap.get("candleCount");
