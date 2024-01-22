@@ -72,7 +72,7 @@ function drawCandlestick(rawData, coinName) {
       legend: {
         bottom: 10,
         left: 'center',
-        data: [coinName, 'MA5', 'MA10', 'MA20', 'MA30']
+        data: [coinName, 'MA2', 'MA5', 'MA10', 'MA20']
       },
       tooltip: {
         trigger: 'axis',
@@ -221,6 +221,15 @@ function drawCandlestick(rawData, coinName) {
           }
         },
         {
+          name: 'MA2',
+          type: 'line',
+          data: calculateMA(2, data),
+          smooth: true,
+          lineStyle: {
+            opacity: 0.5
+          }
+        },
+        {
           name: 'MA5',
           type: 'line',
           data: calculateMA(5, data),
@@ -242,15 +251,6 @@ function drawCandlestick(rawData, coinName) {
           name: 'MA20',
           type: 'line',
           data: calculateMA(20, data),
-          smooth: true,
-          lineStyle: {
-            opacity: 0.5
-          }
-        },
-        {
-          name: 'MA30',
-          type: 'line',
-          data: calculateMA(30, data),
           smooth: true,
           lineStyle: {
             opacity: 0.5
