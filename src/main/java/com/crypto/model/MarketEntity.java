@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class IndexEntity {
+public class MarketEntity {
 	@JsonProperty
 	private String market;
 	@JsonProperty

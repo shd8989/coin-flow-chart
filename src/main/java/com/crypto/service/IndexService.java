@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.crypto.model.CandleEntity;
 import org.json.*;
@@ -21,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.crypto.db.mapper.IndexMapper;
 import com.crypto.model.CoinEntity;
-import com.crypto.model.IndexEntity;
+import com.crypto.model.MarketEntity;
 
 @Service
 public class IndexService {
@@ -33,50 +34,23 @@ public class IndexService {
 		return indexMapper.selectCoinDetailList(coinCode);
 	}
 	
-	public void getAllCoinData() {
+	public List<MarketEntity> selectMarketInfo() {
+		List<MarketEntity> responseEntityList = new ArrayList<MarketEntity>();
 		try {
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			HttpEntity entity = new HttpEntity(httpHeaders);
 			
-			RestTemplate coinRestTemplate = new RestTemplate();
+			RestTemplate restTemplate = new RestTemplate();
 			// 코인 목록 정보
-			String coinListUrl = "https://api.upbit.com/v1/market/all";
-			ResponseEntity<ArrayList> coinResponseEntity = coinRestTemplate.exchange(coinListUrl, HttpMethod.GET, entity, ArrayList.class);
-			List<IndexEntity> coinResponseList = (List) coinResponseEntity.getBody();
-			Iterator itr = coinResponseList.iterator();
-			
-			List<Map> allCoinList = new ArrayList<Map>();
-			while (itr.hasNext()) {
-				Map map = (Map) itr.next();
-				Map newMap = new HashMap();
-				newMap.put("market", map.get("market"));
-				allCoinList.add(newMap);
-			}
-			List<Map> krwList = new ArrayList<>();
-			for(int i=0; i<allCoinList.size(); i++) {
-				Map newMap = new HashMap();
-				if(allCoinList.get(i).get("market").toString().contains("KRW")) {
-					newMap.put("market", allCoinList.get(i).get("market"));
-					krwList.add(newMap);
-				}
-			}
-
-			Iterator itr2 = krwList.iterator();
-			List<Map> list = new ArrayList<>();
-			for(int i=0; i<30; i++) {
-				Map map = (Map)itr2.next();
-				list.add(map);
-				if(i%10 == 9) {
-					detailCoinData(list);
-					list = new ArrayList<>();
-					Thread.sleep(1000);
-				}
-			}
-				
+			String coinListUrl = "https://api.upbit.com/v1/market/all?isDetails=false";
+			ResponseEntity<ArrayList> responseEntity = restTemplate.exchange(coinListUrl, HttpMethod.GET, entity, ArrayList.class);
+			responseEntityList = (List) responseEntity.getBody().stream().filter(obj -> obj.toString().contains("KRW")).collect(Collectors.toList());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			return responseEntityList;
 		}
+		return responseEntityList;
 	}
 	
 	public int detailCoinData(List<Map> coinReqList) {
