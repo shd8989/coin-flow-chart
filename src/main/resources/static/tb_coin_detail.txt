@@ -1,6 +1,20 @@
 -- tb_coin_detail
 create table tb_coin_detail (
 market                        varchar(30) not null,
+opening_price                 double precision,
+high_price                    double precision,
+low_price                     double precision,
+trade_price                   double precision,
+change                        varchar(30),
+trade_volume                  double precision,
+acc_trade_volume              double precision,
+acc_trade_volume_24h          double precision,
+timestp                       timestamp,
+PRIMARY KEY(market, timestp)
+);
+
+create table tb_coin_detail (
+market                        varchar(30) not null,
 trade_date                    varchar(30),
 trade_time                    varchar(30),
 trade_date_kst                varchar(30),

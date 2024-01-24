@@ -9,8 +9,7 @@ import com.crypto.model.CoinEntity;
 
 @Mapper
 public interface IndexMapper {
-	
 	List<CoinEntity> selectCoinDetailList(String coinCode);
 	
-	int updateCoinAllData(List<Map> list);
+	int insertDetailCoinData(List<Map> list);
 }
