@@ -50,7 +50,7 @@ public class CronService {
                     newMap.put("trade_volume", map.get("trade_volume"));
                     newMap.put("acc_trade_volume", map.get("acc_trade_volume"));
                     newMap.put("acc_trade_volume_24h", map.get("acc_trade_volume_24h"));
-                    newMap.put("timestp", map.get("timestp"));
+                    newMap.put("timestp", map.get("timestamp"));
                     coinDetailResList.add(newMap);
                 }
             }

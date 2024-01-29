@@ -9,7 +9,7 @@ change                        varchar(30),
 trade_volume                  double precision,
 acc_trade_volume              double precision,
 acc_trade_volume_24h          double precision,
-timestp                       timestamp,
+timestp                       bigint,
 PRIMARY KEY(market, timestp)
 );
 
