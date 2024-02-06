@@ -26,27 +26,36 @@ public class ScheduleController {
 		List<MarketEntity> subList1 = new ArrayList<>(marketList.subList(0, 10));
 		List<MarketEntity> subList2 = new ArrayList<>(marketList.subList(10, 20));
 		List<MarketEntity> subList3 = new ArrayList<>(marketList.subList(20, 30));
-		Runnable task1 = () -> {
-			cronService.cronDetailCoinData(subList1);
-		};
-		Runnable task2 = () -> {
-			cronService.cronDetailCoinData(subList2);
-		};
-		Runnable task3 = () -> {
-			cronService.cronDetailCoinData(subList3);
-		};
-
-		Thread subTread1 = new Thread(task1);
-		Thread subTread2 = new Thread(task2);
-		Thread subTread3 = new Thread(task3);
 		try {
-			subTread1.start();
-            Thread.sleep(2000);
-			subTread2.start();
+			cronService.cronDetailCoinData(subList1);
 			Thread.sleep(2000);
-			subTread3.start();
-        } catch (InterruptedException e) {
+			cronService.cronDetailCoinData(subList2);
+			Thread.sleep(2000);
+			cronService.cronDetailCoinData(subList3);
+		} catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+//		Runnable task1 = () -> {
+//			cronService.cronDetailCoinData(subList1);
+//		};
+//		Runnable task2 = () -> {
+//			cronService.cronDetailCoinData(subList2);
+//		};
+//		Runnable task3 = () -> {
+//			cronService.cronDetailCoinData(subList3);
+//		};
+//
+//		Thread subTread1 = new Thread(task1);
+//		Thread subTread2 = new Thread(task2);
+//		Thread subTread3 = new Thread(task3);
+//		try {
+//			subTread1.start();
+//          Thread.sleep(2000);
+//			subTread2.start();
+//			Thread.sleep(2000);
+//			subTread3.start();
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 	}
 }
