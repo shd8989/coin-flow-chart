@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="ko">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script th:src="@{./js/scripts.js}"></script>
+<script th:src="@{./js/index.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.0.2/echarts.min.js" integrity="sha512-t9GZbGKCH5MuYUFsq5AdrhllT0kdnc2fNMizKDgLXBBXgHP2dXxjRPOzYJauAXW9OXLlSYELUqWD30k7cb0Mkg==" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: "/api/v1/candleData",
+            type: "POST",
+            data: JSON.stringify({
+                candleType: 'min',
+                market: 'KRW-BTC',
+                candleCount: 100
+            }),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function(data){
+                if(data.length > 0) {
+                    drawCandlestick(data.reverse(), '비트코인');
+                } else {
+                    alert("API call error");
+                }
+            },
+            error: function(){
+                alert("detail api err");
+            }
+        });
+    });
+</script>
+</html>
