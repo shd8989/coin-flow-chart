@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="ko">
+<main th:fragment="content">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+        <div class="row">
+            <div class="contents">
+                <div class="box" style="">
+                    <select th:name="selectCoin" th:id="selectCoin" onchange="selectCoin(this)">
+                        <option value="선택"> 선택 </option>
+                        <option th:each="val:${marketInfo}"
+                                th:value="${val?.market}"
+                                th:utext="${val?.korean_name}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="candlestickChart"></div>
+        </div>
+    </div>
+</main>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: "/api/v1/candleData",
+            type: "POST",
+            data: JSON.stringify({
+                candleType: 'min',
+                market: 'KRW-BTC',
+                candleCount: 100
+            }),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function(data){
+                if(data.length > 0) {
+                    drawCandlestick(data.reverse(), '비트코인');
+                } else {
+                    alert("API call error");
+                }
+            },
+            error: function(){
+                alert("detail api err");
+            }
+        });
+    });
+</script>
+</html>
