@@ -17,4 +17,19 @@ public class IndexController {
 		model.addAttribute("marketInfo", indexService.selectMarketInfo());
 		return "/index";
 	}
+
+	@RequestMapping("/flow")
+	public String flow() {
+		return "/flow";
+	}
+
+	@RequestMapping("/prediction")
+	public String prediction() {
+		return "/prediction";
+	}
+
+	@RequestMapping("/accnt")
+	public String accnt() {
+		return "/accnt";
+	}
 }
